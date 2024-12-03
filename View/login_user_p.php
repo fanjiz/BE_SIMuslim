@@ -24,7 +24,7 @@
         <button type="submit" class="btn">Masuk</button>
       </form>
       <p class="register">
-        Belum punya akun? <a href="../LOGINAWAL/PENDAKWAH.HTML">Registrasi Pendakwah</a>
+        Belum punya akun? <a href="registrasi_pendakwah">Registrasi Pendakwah</a>
       </p>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <?php
-include_once '../controllers/PendakwahController.php';
+include_once '../Controller/PendakwahController.php';
 $pendakwahController = new PendakwahController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
