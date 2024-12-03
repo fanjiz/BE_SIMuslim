@@ -1,11 +1,6 @@
 <?php
-// Include the necessary controller
 include_once '../controllers/PendakwahController.php';
-include_once '../config/database.php';
-
-$database = new Database();
-$db = $database->getConnection();
-$pendakwahController = new PendakwahController($db);
+$pendakwahController = new PendakwahController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pendakwahController->register();

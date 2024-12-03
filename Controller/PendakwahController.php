@@ -1,22 +1,22 @@
 <?php
-include_once 'models/PendakwahModel.php';
+include_once '../Model/PendakwahModel.php';
+include_once 'config.php'; // Memasukkan konfigurasi database
 
 class PendakwahController {
-
     private $model;
 
-    public function __construct($db) {
-        $this->model = new PendakwahModel($db);
+    public function __construct() {
+        $this->model = new PendakwahModel();
     }
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Get form data
+            // Mendapatkan data dari form
             $namaLengkap = $_POST['nama-lengkap'];
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            // Handle file upload
+            // Menangani file upload
             if (isset($_FILES['dokumen'])) {
                 $dokumen = $_FILES['dokumen']['name'];
                 $targetDir = "uploads/";
@@ -24,13 +24,13 @@ class PendakwahController {
                 move_uploaded_file($_FILES['dokumen']['tmp_name'], $targetFile);
             }
 
-            // Call model method to register the Pendakwah
+            // Panggil model untuk mendaftarkan pendakwah
             $result = $this->model->registerPendakwah($namaLengkap, $email, $password, $dokumen);
 
             if ($result) {
-                header('Location: ../views/success.php'); // Redirect to success page
+                header('Location: ../views/success.php'); // Redirect jika sukses
             } else {
-                echo "Registration failed.";
+                echo "Registrasi gagal.";
             }
         }
     }
