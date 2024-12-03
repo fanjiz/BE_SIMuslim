@@ -1,31 +1,27 @@
-// UserModel.js
+const form = document.querySelector('form');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-// Function to handle user login
-function login(username, password) {
-    const loginData = {
+  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const response = await fetch('UserController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      register: true,
       username: username,
+      email: email,
       password: password
-    };
-  
-    fetch('../api/login.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(loginData)  // Send login data as JSON
     })
-    .then(response => response.json())  // Parse the JSON response
-    .then(data => {
-      if (data.success) {
-        // Redirect the user to the homepage if login is successful
-        window.location.href = '../view/HOMEPAGE/HOMEPENDAKWAH.html';
-      } else {
-        // Display error message if login fails
-        alert('Username or Password is incorrect!');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+  });
+
+  const result = await response.json();
+  if (result.success) {
+    alert('Registrasi berhasil!');
+    window.location.href = 'login_user.php';
+  } else {
+    alert('Registrasi gagal: ' + result.message);
   }
-  
+});
