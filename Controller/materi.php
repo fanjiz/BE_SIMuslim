@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
     // Query data
-    $query = "SELECT id, title, description FROM materi";
+    $query = "SELECT * FROM materi";
     if (!empty($search)) {
         $query .= " WHERE title LIKE '%$search%' OR description LIKE '%$search%'";
     }
