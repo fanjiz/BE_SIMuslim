@@ -25,7 +25,7 @@
         <button type="submit" class="btn">Masuk</button>
       </form>
       <p class="register">
-        Belum punya akun? <a href="REGISTRASI.HTML">Registrasi User</a>
+        Belum punya akun? <a href="registrasi_user.php">Registrasi User</a>
       </p>
     </div>
   </div>
