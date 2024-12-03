@@ -25,12 +25,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         <img src="${item.image}" alt="Gambar" style="width:400px;height:300px;">
                         <h5 class="card-title">${item.title}</h5>
                         <p class="card-text">${item.description}</p>
-                        <button class="btn btn-primary">Read More</button>
+                        <button class="btn btn-primary read-more-btn">Read More</button>
                     </div>
                 </div>
             `;
 
             contentContainer.appendChild(card);
+        });
+
+        // Add event listener to the Read More buttons
+        const readMoreButtons = document.querySelectorAll(".read-more-btn");
+        readMoreButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                window.location.href = "../View/isi-materi.html";
+            });
         });
     };
 
