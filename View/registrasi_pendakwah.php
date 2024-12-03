@@ -1,32 +1,23 @@
-<?php
-include_once '../Controller/PendakwahController.php';
-$pendakwahController = new PendakwahController();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pendakwahController->register();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SiMuslim - Registrasi Pendakwah</title>
-  <link rel="stylesheet" href="pendakwah.css">
+  <link rel="stylesheet" href="css/registrasi_pendakwah.css">
 </head>
 <body>
   <div class="container">
     <div class="form-container">
       <h1 class="title">
-        <img src="logosimuslim.png" alt="Logo SiMuslim" class="logo-img">
+        <img src="img/logosimuslim.png" alt="Logo SiMuslim" class="logo-img">
       </h1>
       <p class="subtitle">Registrasi Pendakwah</p>
       
-      <form action="registrasi_pendakwah.php" method="POST" enctype="multipart/form-data">
+      <form action="../controller/PendakwahController.php" method="POST" enctype="multipart/form-data">
         <!-- Nama Lengkap -->
         <div class="form-group">
-          <input type="text" id="nama-lengkap" name="nama-lengkap" placeholder="Nama Lengkap" required>
+          <input type="text" id="username" name="username" placeholder="Username" required>
         </div>
 
         <!-- Email -->
