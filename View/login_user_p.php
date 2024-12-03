@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SiMuslim Login</title>
-  <link rel="stylesheet" href="login_user_p.css">
+  <link rel="stylesheet" href="css/login_user_p.css">
 </head>
 <body>
   <div class="container">
     <div class="form-container">
       <!-- Mengganti tulisan dengan logo -->
       <h1 class="title">
-        <img src="logosimuslim.png" alt="Logo SiMuslim" class="logo">
+        <img src="img/logosimuslim.png" alt="Logo SiMuslim" class="logo">
       </h1>
       <p class="subtitle">Masuk ke akun Anda</p>
       <form action="../HOMEPAGE/HOMEPENDAKWAH.HTML" method="POST">
