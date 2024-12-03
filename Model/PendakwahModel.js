@@ -1,25 +1,24 @@
-const registerPendakwah = async (namaLengkap, email, password, dokumen) => {
-  const formData = new FormData();
-  formData.append("nama-lengkap", namaLengkap);
-  formData.append("email", email);
-  formData.append("password", password);
-  formData.append("dokumen", dokumen);
+// PendakwahModel.js
 
-  try {
-    const response = await fetch("../controller/PendakwahController.php?action=register", {
-      method: "POST",
-      body: formData,
-    });
+const mysql = require('mysql');
+const dbConfig = require('../config.php'); // Assuming your database config is in config.php
 
-    const data = await response.json();
+const connection = mysql.createConnection(dbConfig);
 
-    if (response.ok) {
-      alert("Registrasi berhasil!");
-    } else {
-      alert("Terjadi kesalahan: " + data.error);
+class PendakwahModel {
+    registerPendakwah(namaLengkap, email, password, dokumenPath) {
+        return new Promise((resolve, reject) => {
+            // Insert the user into the database
+            const query = `INSERT INTO pendakwah (nama_lengkap, email, password, dokumen) VALUES (?, ?, ?, ?)`;
+            connection.query(query, [namaLengkap, email, password, dokumenPath], (err, result) => {
+                if (err) {
+                    reject("Gagal registrasi pendakwah: " + err.message);
+                } else {
+                    resolve(true);
+                }
+            });
+        });
     }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Terjadi kesalahan dalam mengirim data");
-  }
-};
+}
+
+module.exports = PendakwahModel;
