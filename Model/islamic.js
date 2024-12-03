@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
             card.innerHTML = `
                 <div class="card">
                     <div class="card-body">
-                        <img class="img-wrapper" src="${item.image}" style="max-width:400px; max-height:300px;">
                         <h5 class="card-title">${item.title}</h5>
                         <p class="card-text">${item.description}</p>
                         <button class="btn btn-primary">Read More</button>
@@ -35,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to fetch data from the API
     const fetchAndRenderContent = async (searchTerm = "") => {
         try {
-            const response = await fetch(`../Controller/api.php?search=${encodeURIComponent(searchTerm)}`);
+            const response = await fetch(`api.php?search=${encodeURIComponent(searchTerm)}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
