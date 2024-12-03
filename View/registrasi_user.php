@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SiMuslim - Registrasi User</title>
-  <link rel="stylesheet" href="registrasi_user.css">
+  <link rel="stylesheet" href="css/registrasi_user.css">
 </head>
 <body>
   <div class="container">
@@ -17,7 +17,7 @@
       <form action="#" method="POST" enctype="multipart/form-data">
         <!-- Nama Lengkap -->
         <div class="form-group">
-          <input type="text" id="nama-lengkap" name="nama-lengkap" placeholder="Nama Lengkap" required>
+          <input type="text" id="username" name="username" placeholder="Username" required>
         </div>
 
         <!-- Email -->

@@ -94,8 +94,7 @@
   }
   
   .btn:hover {
-    background-color: #ebef16;
-    transform: scale(1.05); /* Efek zoom-in saat hover */
+    background-color: #04874c;
   }
   
   /* Register Text Styling */
