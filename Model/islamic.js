@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
             contentContainer.innerHTML = `<div class="col-12 text-center">No content found.</div>`;
             return;
         }
+        
+        console.log(data)
 
         // Loop through data and create cards
         data.forEach(item => {
@@ -20,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.innerHTML = `
                 <div class="card">
                     <div class="card-body">
-                        <img 
+                        <img src="${item.image}" alt="Gambar" style="width:400px;height:300px;">
                         <h5 class="card-title">${item.title}</h5>
                         <p class="card-text">${item.description}</p>
                         <button class="btn btn-primary">Read More</button>
