@@ -64,3 +64,50 @@
   </script>
 </body>
 </html>
+
+<?php
+// Koneksi ke database
+$host = "localhost"; // Ganti jika menggunakan host berbeda
+$user = "root";      // Username MySQL
+$password = "";      // Password MySQL
+$dbname = "simuslim";
+
+$conn = new mysqli($host, $user, $password, $dbname);
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Jika form disubmit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Ambil data dari form
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm-password'];
+
+    // Validasi: Periksa jika password cocok
+    if ($password !== $confirm_password) {
+        echo "Password tidak cocok!";
+        exit;
+    }
+
+    // Hash password untuk keamanan
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+    // Masukkan data ke database
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $username, $email, $hashed_password);
+
+    if ($stmt->execute()) {
+        echo "Registrasi berhasil!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+?>

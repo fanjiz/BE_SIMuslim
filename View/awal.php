@@ -13,7 +13,7 @@
         <div class="choices">
             <!-- USER -->
             <div class="choice">
-                <a href="../controller/UserController.php" class="choice-link">
+                <a href="login_user.php" class="choice-link">
                     <div class="icon">
                         <img src="img/profil.png" alt="User Icon"> <!-- Ikon user -->
                     </div>
@@ -23,7 +23,7 @@
             </div>
             <!-- PENDAKWAH -->
             <div class="choice">
-                <a href="../controller/PendakwahController.php" class="choice-link">
+                <a href="login_pendakwah.php" class="choice-link">
                     <div class="icon">
                         <img src="img/profil.png" alt="Pendakwah Icon"> <!-- Ikon pendakwah -->
                     </div>
