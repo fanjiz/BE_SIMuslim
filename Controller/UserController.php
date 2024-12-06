@@ -38,7 +38,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'login') {
                 // Login berhasil
                 session_start();
                 $_SESSION['username'] = $username; // Set sesi username
-                header("Location: ../view/dashboard.php");
+                header("Location: ../view/homepage/home.html");
                 exit;
             } else {
                 // Password salah
