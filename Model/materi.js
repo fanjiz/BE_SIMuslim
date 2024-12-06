@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
             contentContainer.innerHTML = `<div class="col-12 text-center">No content found.</div>`;
             return;
         }
-        
-        console.log(data)
 
+        // Loop through data and create cards
         // Loop through data and create cards
         data.forEach(item => {
             const card = document.createElement("div");
@@ -21,24 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             card.innerHTML = `
                 <div class="card">
-                    <div class="card-body">
-                        <img src="${item.image}" alt="Gambar" style="width:400px;height:300px;">
+                    <div class="card-body d-flex flex-column ">
+                        <img src="${item.image}" class="img-fluid mb-3" style="max-width: 100%; height: auto; align-items-center">
                         <h5 class="card-title">${item.title}</h5>
                         <p class="card-text">${item.description}</p>
-                        <button class="btn btn-primary read-more-btn">Read More</button>
+                        <a href="../Controller/isi-materi.php?id=${item.id}" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
-            `;
-
+        `;
+        
             contentContainer.appendChild(card);
-        });
-
-        // Add event listener to the Read More buttons
-        const readMoreButtons = document.querySelectorAll(".read-more-btn");
-        readMoreButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                window.location.href = "../View/isi-materi.html";
-            });
         });
     };
 

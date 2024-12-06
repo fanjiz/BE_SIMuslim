@@ -1,72 +1,53 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+  background-color: #e8f5e9;
+  color: #343a40;
 }
 
-.header {
-    background-color: #007BFF;
-    color: white;
-    padding: 20px;
-    text-align: center;
+.navbar {
+  background-color: #208454 !important; /* Custom green color */
 }
 
-.header input {
-    margin-top: 10px;
-    padding: 10px;
-    width: 50%;
-    border: none;
-    border-radius: 5px;
+.navbar h4 {
+  padding: 1rem;
+  color: #ffffff; /* White color for better contrast */
 }
 
-.header button {
-    padding: 10px 20px;
-    margin-left: 10px;
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.btn-outline-light {
+  color: #ffffff;
+  border-color: #ffffff;
 }
 
-.content-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px;
+.btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #208454;
 }
 
-.content-item {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    width: 300px;
-    margin: 15px;
-    padding: 15px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+.search-bar {
+  max-width: 300px;
 }
 
-.content-item h3 {
-    font-size: 1.5em;
-    margin: 0;
+.decorative-curve {
+  height: 10px;
+  background: linear-gradient(to right, #77eec0, #77c2ee);
 }
 
-.content-item p {
-    font-size: 1em;
-    color: #555;
+.container {
+  margin-top: 20px;
 }
 
-
-.img-wrapper {
-    width: 100%; /* Menyesuaikan dengan lebar kontainer */
-    max-width: 400px; /* Ukuran maksimal gambar */
-    aspect-ratio: 1 / 1; /* Mengatur rasio aspek 1:1 */
-    overflow: hidden; /* Menyembunyikan bagian gambar yang berlebih */
+button i {
+  font-size: 1.2rem;
 }
 
-.img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Menyesuaikan gambar agar tetap proporsional */
+#content-container {
+  margin-top: 20px;
+}
+
+input.form-control.rounded-pill {
+  border-radius: 50px; /* Rounded input field */
+}
+
+button.btn.rounded-circle {
+  border-radius: 50%; /* Circle button */
 }
