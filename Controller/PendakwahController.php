@@ -4,7 +4,7 @@ session_start(); // Start session
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['user_logged_in'])) {
     // Jika belum login, arahkan ke halaman login_user_p.php
-    header('Location: ../view/login_user_p.php');
+    header('Location: ../view/login_pendakwah.php');
     exit(); // Hentikan eksekusi setelah pengalihan
 }
 

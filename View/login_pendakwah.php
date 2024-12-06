@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SiMuslim Login</title>
-  <link rel="stylesheet" href="css/login_user_p.css">
+  <link rel="stylesheet" href="css/login_pendakwah.css">
 </head>
 <body>
   <div class="container">
