@@ -101,10 +101,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sss", $username, $email, $hashed_password);
 
     if ($stmt->execute()) {
-        echo "Registrasi berhasil!";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+      // Registrasi berhasil, redirect ke login_user.php
+      header("Location: login_user.php");
+      exit;
+  } else {
+      echo "Error: " . $stmt->error;
+  }
 
     $stmt->close();
 }
