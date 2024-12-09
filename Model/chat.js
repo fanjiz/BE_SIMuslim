@@ -1,20 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const groupId = new URLSearchParams(window.location.search).get('groupId');
-    document.getElementById('groupId').value = groupId;
-    fetchMessages(groupId);
-});
-
-// Function to fetch messages
+// Fetch messages for the specific group
 async function fetchMessages(groupId) {
     try {
-        const response = await fetch(`../Controller/chat.php?group_id=${groupId}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        const response = await fetch(`../Controller/chat.php?groupId=${groupId}`);
         const messages = await response.json();
 
         const chatBox = document.getElementById('chatBox');
-        chatBox.innerHTML = '';
+        chatBox.innerHTML = ''; // Clear the chat box
 
         messages.forEach(msg => {
             const messageElement = document.createElement('div');
@@ -23,43 +14,55 @@ async function fetchMessages(groupId) {
             chatBox.appendChild(messageElement);
         });
 
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
     } catch (error) {
         console.error('Error fetching messages:', error);
         alert('Failed to load messages');
     }
 }
 
-// Function to send a message
-document.getElementById('chatForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const userId = document.getElementById('userId').value;
-    const groupId = document.getElementById('groupId').value;
-    const message = document.getElementById('chatMessage').value.trim();
-
-    if (message === '') {
-        alert('Please enter a message');
-        return;
-    }
-
+// Send a message
+async function sendMessage(username, message, groupId) {
     try {
         const response = await fetch('../Controller/chat.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `group_id=${groupId}&user_id=${userId}&message=${encodeURIComponent(message)}`,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `username=${encodeURIComponent(username)}&message=${encodeURIComponent(message)}&groupId=${groupId}`
         });
 
         const result = await response.json();
         if (result.status === 'success') {
-            document.getElementById('chatMessage').value = '';
-            fetchMessages(groupId);
+            fetchMessages(groupId); // Refresh the chat box
         } else {
             alert(result.message || 'Failed to send message');
         }
     } catch (error) {
         console.error('Error sending message:', error);
         alert('Failed to send message');
+    }
+}
+
+// Initialize chat functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const groupId = urlParams.get('groupId');
+
+    if (groupId) {
+        fetchMessages(groupId);
+
+        document.getElementById('chatForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (username && message) {
+                await sendMessage(username, message, groupId);
+                document.getElementById('message').value = ''; // Clear the message input
+            }
+        });
+    } else {
+        alert('No group ID provided!');
+        window.location.href = 'group.html';
     }
 });
