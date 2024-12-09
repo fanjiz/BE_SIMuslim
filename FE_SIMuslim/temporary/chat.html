@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat</title>
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Dynamic Group Name -->
+        <h1 id="groupName">Group Chat</h1>
+
+        <!-- Chat Box for Displaying Messages -->
+        <div id="chatBox" class="chat-box"></div>
+
+        <!-- Chat Form for Sending Messages -->
+        <form id="chatForm" class="chat-form">
+            <input type="text" id="username" placeholder="Your Name" required>
+            <input type="text" id="message" placeholder="Type a message" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <!-- Link to Chat JavaScript -->
+    <script src="../Model/chat.js"></script>
+    <script>
+        // Fetch the groupId from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const groupId = urlParams.get('groupId');
+
+        // If groupId exists, initialize chat
+        if (groupId) {
+            // Display the group name dynamically (Optional: Fetch from server if stored)
+            document.getElementById('groupName').textContent = `Group ID: ${groupId}`;
+
+            // Fetch and display messages for this group
+            fetchMessages(groupId);
+
+            // Event listener for sending messages
+            document.getElementById('chatForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value.trim();
+                const message = document.getElementById('message').value.trim();
+
+                if (username && message) {
+                    // Send the message for this group
+                    sendMessage(username, message, groupId);
+
+                    // Clear the message input field
+                    document.getElementById('message').value = '';
+                }
+            });
+        } else {
+            // Redirect to the group list page if groupId is missing
+            alert('Group ID not found!');
+            window.location.href = 'group.html';
+        }
+    </script>
+</body>
+</html>

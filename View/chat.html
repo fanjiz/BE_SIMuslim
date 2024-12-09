@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat</title>
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Group Chat</h1>
+        
+        <div id="chatBox" class="chat-box">
+            <!-- Messages will be loaded here -->
+        </div>
+        
+        <form id="chatForm" class="chat-form">
+            <input type="hidden" id="userId" value="1"> <!-- Replace with actual user ID -->
+            <input type="hidden" id="groupId" value=""> <!-- Replace with actual group ID -->
+            <input type="text" id="chatMessage" placeholder="Type your message..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script src="../Model/chat.js"></script>
+</body>
+</html>
