@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <!-- Link untuk ikon Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="d-flex" style="height: 100vh;">
+        <!-- Sidebar -->
+        <nav class="sidebar bg-success text-white p-3">
+            <h2 class="text-center">Menu</h2>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" onclick="showSection('pendakwahSection')">Data Pendakwah</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" onclick="showSection('pesertaSection')">Data Peserta</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" onclick="showSection('materiSection')">Data Materi Islami</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="dashboard-container flex-grow-1 p-4">
+            <h1 class="text-center">Admin Dashboard</h1>
+
+            <!-- Data Pendakwah -->
+            <div id="pendakwahSection" class="dashboard-section">
+                <h2>Data Pendakwah</h2>
+                <table id="pendakwahTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Sertifikasi</th>
+                            <th>Tanggal Dibuat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data akan dimuat di sini -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Data Peserta -->
+            <div id="pesertaSection" class="dashboard-section" style="display: none;">
+                <h2>Data Peserta</h2>
+                <table id="pesertaTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Tanggal Dibuat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data akan dimuat di sini -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Data Materi Islami -->
+            <div id="materiSection" class="dashboard-section" style="display: none;">
+                <h2>Data Materi Islami</h2>
+                <table id="materiTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Judul</th>
+                            <th>Deskripsi</th>
+                            <th>Penulis</th>
+                            <th>Tanggal</th>
+                            <th>Konten</th>
+                            <th>Gambar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data akan dimuat di sini -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Model/admin.js"></script>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.dashboard-section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const fetchAndDisplayData = async (type, tableId) => {
+                try {
+                    const response = await fetch(`../Controller/admin.php?type=${type}`);
+                    if (!response.ok) throw new Error("Gagal memuat data");
+
+                    const data = await response.json();
+                    displayData(data, tableId);
+                } catch (error) {
+                    console.error("Error:", error);
+                    document.querySelector(`#${tableId} tbody`).innerHTML = `
+                        <tr><td colspan="7">Gagal memuat data</td></tr>`; // Update jumlah kolom jika gagal
+                }
+            };
+
+            const displayData = (data, tableId) => {
+                const tableBody = document.querySelector(`#${tableId} tbody`);
+                tableBody.innerHTML = "";
+
+                data.forEach((item) => {
+                    const row = document.createElement("tr");
+
+                    if (tableId === "materiTable") {
+                        row.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.title}</td>
+                            <td>${item.description}</td>
+                            <td>${item.author}</td>
+                            <td>${new Date(item.date).toLocaleString()}</td>
+                            <td>
+                                <button class="lihat-button" data-id="${item.id}">Lihat</button>
+                            </td>
+                            <td>
+                                <img src="${item.image}" alt="Image" style="max-width: 100px; height: auto;">
+                            </td>`;
+                    } else if (tableId === "pendakwahTable" || tableId === "pesertaTable") {
+                        row.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.nama}</td>
+                            <td>${item.email}</td>
+                            <td>${item.sertifikasi || item.created_at}</td>
+                            <td>${new Date(item.created_at).toLocaleString()}</td>`;
+                    }
+
+                    tableBody.appendChild(row);
+                });
+            };
+
+            // Memuat data dari tabel
+            fetchAndDisplayData("materi", "materiTable");
+            fetchAndDisplayData("pendakwah", "pendakwahTable");
+            fetchAndDisplayData("peserta", "pesertaTable");
+
+            document.addEventListener("click", (event) => {
+                if (event.target.classList.contains("lihat-button")) {
+                    const materiId = event.target.getAttribute("data-id");
+                    // Redirect ke halaman detail materi
+                    window.location.href = `../Controller/isi-materi.php?id=${materiId}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
