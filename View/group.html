@@ -3,21 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group List</title>
+    <title>GRUP DISKUSI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/group.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Groups</h1>
-
-        <form id="addGroupForm" class="add-group-form">
-            <input type="text" id="groupName" placeholder="Enter group name" required>
-            <button type="submit">Add Group</button>
-        </form>
-
-        <div id="groupList" class="group-list"></div>
+    <div class="container mt-4">
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-secondary me-2"><i class="bi bi-arrow-left"></i></button>
+                <h1 class="mb-0">Diskusi Grup</h1>
+            </div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGroupModal">Buat</button>
+        </header>
+        <div class="d-flex justify-content-center">
+            <ul id="groupList" class="list-group w-75">
+                <!-- Group items will be dynamically loaded here -->
+            </ul>
+        </div>
     </div>
 
+    <!-- Add Group Modal -->
+    <div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="addGroupForm" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addGroupModalLabel">Tambahkan Grup Baru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Judul Grup</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ustadz_name" class="form-label">Nama Ustadz</label>
+                            <input type="text" class="form-control" id="ustadz_name" name="ustadz_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile_picture" class="form-label">Foto Profil</label>
+                            <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan Grup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../Model/group.js"></script>
 </body>
 </html>
