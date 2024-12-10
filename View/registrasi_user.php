@@ -81,26 +81,45 @@ if ($conn->connect_error) {
 
 // Jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari form
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm-password'];
+  // Ambil data dari form
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $confirm_password = $_POST['confirm-password'];
 
-    // Validasi: Periksa jika password cocok
-    if ($password !== $confirm_password) {
-        echo "Password tidak cocok!";
-        exit;
-    }
+  // Validasi: Periksa jika password cocok
+  if ($password !== $confirm_password) {
+      echo "<script>alert('Password tidak cocok!');</script>";
+      exit;
+  }
 
-    // Hash password untuk keamanan
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+  // Cek apakah email sudah ada
+  $stmt_check = $conn->prepare("SELECT email FROM users WHERE email = ?");
+  $stmt_check->bind_param("s", $email);
+  $stmt_check->execute();
+  $stmt_check->store_result();
 
-    // Masukkan data ke database
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $username, $email, $hashed_password);
+  if ($stmt_check->num_rows > 0) {
+      echo "<script>
+              document.getElementById('email').insertAdjacentHTML(
+                'afterend',
+                '<p style=\"color: red; font-size: small;\">Email sudah terdaftar</p>'
+              );
+            </script>";
+      $stmt_check->close();
+      exit;
+  }
 
-    if ($stmt->execute()) {
+  $stmt_check->close();
+
+  // Hash password untuk keamanan
+  $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+  // Masukkan data ke database
+  $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+  $stmt->bind_param("sss", $username, $email, $hashed_password);
+
+  if ($stmt->execute()) {
       // Registrasi berhasil, redirect ke login_user.php
       header("Location: login_user.php");
       exit;
@@ -108,8 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "Error: " . $stmt->error;
   }
 
-    $stmt->close();
+  $stmt->close();
 }
 
 $conn->close();
-?>
+
