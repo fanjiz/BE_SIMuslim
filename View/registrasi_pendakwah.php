@@ -23,6 +23,11 @@
         <!-- Email -->
         <div class="form-group">
           <input type="email" id="email" name="email" placeholder="Email" required>
+          
+          <!-- Pesan error jika email sudah terdaftar -->
+          <?php if(isset($_GET['error']) && $_GET['error'] == 'email_exists'): ?>
+            <p style="color: red; font-size: 14px;">Email sudah terdaftar.</p>
+          <?php endif; ?>
         </div>
 
         <!-- Password -->

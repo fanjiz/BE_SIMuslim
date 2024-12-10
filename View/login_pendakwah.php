@@ -29,3 +29,48 @@
   </div>
 </body>
 </html>
+<?php
+session_start(); // Memulai sesi
+
+// Cek apakah metode permintaan adalah POST untuk login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+    // Ambil data dari form login
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Koneksi database
+    include_once 'config.php'; // File koneksi database
+
+    // Cek apakah username ada di database
+    $stmt = $conn->prepare("SELECT * FROM pendakwah WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        // Verifikasi password
+        if (password_verify($password, $user['password'])) {
+            // Jika login berhasil, simpan data sesi
+            $_SESSION['user_logged_in'] = true;
+            $_SESSION['username'] = $user['username'];
+            header("Location: HOMEPAGE\HOMEPENDAKWAH.HTML"); // Ganti dengan halaman yang sesuai setelah login
+            exit();
+        } else {
+            // Password salah
+            header("Location: login_pendakwah.php?error=Password salah");
+            exit();
+        }
+    } else {
+        // Username tidak ditemukan
+        header("Location: login_pendakwah.php?error=Username tidak ditemukan");
+        exit();
+    }
+
+    // Tutup statement dan koneksi
+    $stmt->close();
+    $conn->close();
+} else 
+    
+?>
