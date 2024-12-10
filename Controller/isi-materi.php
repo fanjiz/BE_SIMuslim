@@ -42,9 +42,9 @@ function formatIsiContent($content) {
     <!-- Header -->
     <header class="bg-success text-white py-3">
         <div class="container d-flex align-items-center">
-            <a href="/View/materi.html" class="btn btn-light me-3">
+            <button class="btn btn-light me-3" onclick="goBack()">
                 ← Kembali
-            </a>
+            </button>
             <h1 class="h4 mb-0 text-center flex-grow-1">Materi Islami</h1>
         </div>
     </header>
@@ -76,7 +76,7 @@ function formatIsiContent($content) {
 
         <!-- Back to Homepage -->
         <div class="text-center mt-4">
-            <a href="/View/materi.html" class="btn btn-success">← Kembali ke Beranda</a>
+            <a href="/View/materi.html" class="btn btn-success">Kembali</a>
         </div>
     </main>
 
@@ -87,6 +87,11 @@ function formatIsiContent($content) {
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 
 </html>
