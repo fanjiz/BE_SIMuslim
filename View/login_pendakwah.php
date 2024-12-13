@@ -30,7 +30,6 @@
 </body>
 </html>
 <?php
-session_start(); // Memulai sesi
 
 // Cek apakah metode permintaan adalah POST untuk login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
@@ -55,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             // Jika login berhasil, simpan data sesi
             $_SESSION['user_logged_in'] = true;
             $_SESSION['username'] = $user['username'];
-            header("Location: HOMEPAGE\HOMEPENDAKWAH.HTML"); // Ganti dengan halaman yang sesuai setelah login
+
+            // Jika data berhasil dibaca, arahkan ke halaman homependakwah.html
+            header("Location: HOMEPAGE/homependakwah.html");
             exit();
         } else {
             // Password salah
@@ -71,6 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     // Tutup statement dan koneksi
     $stmt->close();
     $conn->close();
-} else 
-    
+} else {
+    // Jika bukan metode POST, arahkan kembali ke halaman login
+    header("Location: login_pendakwah.php");
+    exit();
+}
 ?>
+
