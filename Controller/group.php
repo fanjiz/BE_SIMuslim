@@ -35,8 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $result = $conn->query("SELECT * FROM groups ORDER BY created_at DESC");
     $groups = $result->fetch_all(MYSQLI_ASSOC);
-    echo json_encode($groups);
+    echo json_encode($groups);locale_get_display_region
 }
 
 $conn->close();
 ?>
+n

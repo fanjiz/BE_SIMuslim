@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             // Jika registrasi berhasil, arahkan ke halaman login pendakwah
-            header("Location: ../view/login_pendakwah.php");
+            header("Location: ../view/halaman_tunggu.html");
             exit(); // Pastikan untuk menghentikan eksekusi setelah redirect
         } else {
             echo json_encode(["error" => "Registrasi gagal. Silakan coba lagi"]);
