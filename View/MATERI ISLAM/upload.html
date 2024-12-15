@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Materi Islami</title>
+  <title>Upload Materi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="islamic.css"> <!-- Link ke file CSS eksternal -->
+  <link rel="stylesheet" href="islamic.css">
   <style>
-    .navbar h4 {
-      margin: 0 auto; /* Centering the title */
+    .image-preview {
+      width: 600px; /* Set a fixed width */
+      height: 300px; /* Set a fixed height */
+      object-fit: cover; /* Ensure the image covers the box */
+      border: 1px solid #ddd; /* Optional: add a border */
+      border-radius: 5px; /* Optional: rounded corners */
     }
-    
+    .navbar h4 { margin: 0 auto; /* Centering the title */ }
   </style>
 </head>
 <body>
@@ -24,15 +28,9 @@
     <a href="../MATERI ISLAM/islamicpendakwah.html">
       <button><i class="bi bi-arrow-left"></i></button>
     </a>
-    <h4><i class="bi bi-moon-stars"></i> Upload Materi Islami</h4>
+    <h4><i class="bi bi-moon-stars" ></i> Upload Materi Islami</h4>
     <div></div> <!-- Placeholder to keep the title centered -->
   </nav>
-
-  <!-- Rest of your content -->
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
 
   <div class="container mt-5 bg-light shadow p-5 rounded">
     <div class="text-center mb-4">
@@ -54,13 +52,13 @@
         <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
       </div>
       <div class="mb-3 form-group">
-        <label for="image" class="form-label">Unggah Foto <span class="text-muted">(JPEG, PNG)</span></label>
+        <label for="image" class="form-label">Unggah Foto (3 x 6) <span class="text-muted">(JPEG, PNG)</span></label>
         <input type="file" class="form-control custom-file-input" id="image" name="image" accept="image/*" required>
         <label class="custom-file-label" for="image">Pilih file</label>
         <small class="text-muted">Pastikan ukuran file kurang dari 2MB.</small>
       </div>
       <div class="preview-image" id="previewImage" style="display: none;">
-        <img id="imagePreview" src="" alt="Image Preview">
+        <img id="imagePreview" class="image-preview" src="" alt="Image Preview">
       </div>
       <div class="mb-4">
         <hr>
@@ -117,35 +115,40 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.getElementById('uploadMateriForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-      confirmationModal.show();
+    e.preventDefault();
+    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    confirmationModal.show();
     });
 
     document.getElementById('confirmUpload').addEventListener('click', function() {
-      const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
-      confirmationModal.hide();
+    const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+    confirmationModal.hide();
 
-      const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
-      loadingModal.show();
+    const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+    loadingModal.show();
 
-      setTimeout(() => {
+    setTimeout(() => {
         loadingModal.hide();
         const successModal = new bootstrap.Modal(document.getElementById('successModal'));
         successModal.show();
         // Men-scroll halaman ke atas setelah upload selesai
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 3000);
+        
+        // Arahkan ke halaman materi-saya.html setelah modal sukses ditutup
+        successModal._element.addEventListener('hidden.bs.modal', () => {
+        window.location.href = 'materi-saya.html';
+        });
+    }, 3000);
     });
 
     document.getElementById('image').addEventListener('change', function(event) {
-      const [file] = event.target.files;
-      if (file) {
+    const [file] = event.target.files;
+    if (file) {
         const previewImage = document.getElementById('previewImage');
         const imagePreview = document.getElementById('imagePreview');
         imagePreview.src = URL.createObjectURL(file);
         previewImage.style.display = 'block';
-      }
+    }
     });
   </script>
 </body>
