@@ -1,23 +1,11 @@
 body {
-    background: linear-gradient(to bottom, #e7f4e9, #f3f4f6);
-    font-family: Arial, sans-serif;
-    position: relative;
-    overflow-x: hidden;
-  }
+  background: linear-gradient(to bottom, #e7f4e9, #f3f4f6);
+  font-family: Arial, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  height: 100vh; /* Tambahkan ini */
+}
 
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('background\ belakang\ new.jpg'); /* Ganti dengan link gambar latar belakang */
-    background-size: cover; /* Agar gambar memenuhi seluruh area */
-    background-position: center; /* Menjaga gambar tetap di tengah */
-    z-index: -1; /* Menempatkan gambar di belakang konten lainnya */
-  }
-  
   /* Elemen lengkung hijau di atas */
   .decorative-curve {
     position: absolute;
@@ -135,12 +123,13 @@ body {
   }
   
   .card img {
-    width: 100%; /* Gambar akan menyesuaikan dengan lebar card */
-    height: auto; /* Menjaga rasio gambar */
-    object-fit: cover; /* Gambar akan dipotong agar sesuai dengan dimensi tanpa distorsi */
-    border-radius: 8px; /* Menambahkan efek sudut melengkung */
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Tambahkan ini */
+    border-radius: 8px;
 }
-
+  
+  
 
   .img-custom {
     width: 80%; /* Sesuaikan ukuran */

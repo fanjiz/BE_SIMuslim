@@ -1,0 +1,105 @@
+/* Background warna solid */
+body {
+    background: #a2d9ce; /* Ganti dari gradient */
+    font-family: 'Arial', sans-serif;
+    color: #4a4a4a;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Agar scroll tetap aktif saat modal */
+body.modal-open {
+    overflow-y: auto !important;
+    padding-right: 0 !important;
+}
+
+.container {
+    max-width: 800px;
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.basmalah {
+    font-size: 2.5em;
+    color: #218838;
+    margin: 10px 0;
+    font-family: 'Scheherazade New', serif;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+p {
+    font-size: 1.1em;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #555;
+}
+
+.custom-file-label::after {
+    content: "Pilih file";
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-group::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.form-group:hover::before {
+    border-color: #28a745;
+}
+
+.preview-image {
+    margin-top: 20px;
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.preview-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 2px solid #28a745;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
