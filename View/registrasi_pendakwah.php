@@ -15,9 +15,14 @@
       <p class="subtitle">Registrasi Pendakwah</p>
       
       <form action="../controller/PendakwahController.php" method="POST" enctype="multipart/form-data">
-        <!-- Nama Lengkap -->
+        <!-- Username -->
         <div class="form-group">
           <input type="text" id="username" name="username" placeholder="Username" required>
+        </div>
+
+        <!-- Nama Lengkap -->
+        <div class="form-group">
+          <input type="text" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
         </div>
 
         <!-- Email -->
@@ -58,6 +63,17 @@
               👁️
             </button>
           </div>
+        </div>
+
+        <!-- Konfirmasi Password -->
+        <div class="form-group">
+          <input 
+            type="password" 
+            id="konfirmasi_password" 
+            name="konfirmasi_password" 
+            placeholder="Konfirmasi Password" 
+            required
+          >
         </div>
 
         <!-- Dokumen Upload -->

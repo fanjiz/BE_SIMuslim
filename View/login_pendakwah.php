@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     $password = htmlspecialchars(trim($_POST['password']));
 
     // Koneksi database
-    include_once 'config.php'; // File koneksi database
+    include_once '../controller/config.php'; // File koneksi database
 
     if ($conn) {
         // Cek apakah username ada di database
