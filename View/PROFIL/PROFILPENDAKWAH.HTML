@@ -5,33 +5,243 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Halaman Profil Pengguna</title>
   <link rel="stylesheet" href="profilpendakwah.css">
+  <style>
+    /* Styling untuk tombol Logout dan Modal */
+    .logout-button {
+      display: inline-block;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .logout-button:hover {
+      background-color: #e60000;
+    }
+
+    /* Modal Styling */
+    .modal, .loading-popup {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      width: 300px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .modal h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .modal button {
+      margin: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-confirm {
+      background-color: #ff4d4d;
+      color: white;
+    }
+    .btn-cancel {
+      background-color: #ddd;
+      color: black;
+    }
+    .btn-confirm:hover {
+      background-color: #e60000;
+    }
+    .btn-cancel:hover {
+      background-color: #ccc;
+    }
+
+    /* Styling Popup Loading */
+    .loading-popup-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      width: 200px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #ff4d4d;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+        /* Container profil */
+        .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    /* Foto Profil */
+    .profile-picture {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      border: 3px solid #ddd;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .profile-picture:hover {
+      border-color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay dengan ikon kamera */
+    .profile-picture::after {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border-top-left-radius: 50%;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .profile-picture:hover::after {
+      opacity: 1;
+    }
+
+    /* Input file */
+    #file-input {
+      display: none;
+    }
+
+    /* Pesan error */
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+  <script>
+    function changeProfilePicture(event) {
+      const file = event.target.files[0];
+      const errorMessage = document.getElementById("error-message");
+
+      if (file) {
+        // Validasi ukuran file (maksimal 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+          errorMessage.textContent = "Ukuran file terlalu besar! Maksimal 2MB.";
+          return;
+        }
+
+        // Validasi jenis file (hanya gambar)
+        if (!file.type.startsWith("image/")) {
+          errorMessage.textContent = "Format file tidak valid! Harap unggah file gambar.";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("profile-img").src = e.target.result;
+          errorMessage.textContent = ""; // Hapus pesan error jika berhasil
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <!-- Tombol Back Button sebagai link untuk mengarah ke HOME -->
-      <a href="../HOMEPAGE/HOMEPENDAKWAH.HTML" class="back-button">&larr; </a>
+      <!-- Tombol Back Button -->
+      <a href="../HOMEPAGE/HOMEPENDAKWAH.HTML" class="back-button">&larr;</a>
       <h1>Profil Pendakwah</h1>
     </div>
     <div class="profile">
       <!-- Foto Profil -->
       <div class="profile-picture" onclick="document.getElementById('file-input').click();">
-        <img id="profile-img" src="default-profile.jpg" />
+        <img id="profile-img" src="default-profile.jpg">
       </div>
-      
       <!-- Input file untuk mengganti foto -->
-      <input type="file" id="file-input" style="display: none;" onchange="changeProfilePicture(event)">
-
+      <input type="file" id="file-input" accept="image/*" onchange="changeProfilePicture(event)">
+      <!-- Pesan error -->
+      <div id="error-message" class="error-message"></div>
+  
+      <!-- Form Profil -->
       <div class="profile-info">
-        <label for="name">Nama:</label>
-        <input type="text" id="name" placeholder="Masukkan nama">
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Masukkan username">
+
+        <label for="name">Nama Lengkap:</label>
+        <input type="text" id="name" placeholder="Masukkan nama lengkap">
+
         <label for="email">Email:</label>
         <input type="email" id="email" placeholder="Masukkan email">
       </div>
+
+      <!-- Tombol Logout -->
+      <button class="logout-button" onclick="openModal()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Logout -->
+  <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <h2>Konfirmasi Logout</h2>
+      <p>Apakah Anda yakin ingin logout?</p>
+      <button class="btn-confirm" onclick="startLogout()">Ya, Logout</button>
+      <button class="btn-cancel" onclick="closeModal()">Batal</button>
+    </div>
+  </div>
+
+  <!-- Popup Loading -->
+  <div id="loadingPopup" class="loading-popup">
+    <div class="loading-popup-content">
+      <div class="spinner"></div>
+      <p>Loading...</p>
     </div>
   </div>
 
   <script>
+    // Fungsi mengganti foto profil
     function changeProfilePicture(event) {
       const file = event.target.files[0];
       if (file) {
@@ -41,6 +251,31 @@
         };
         reader.readAsDataURL(file);
       }
+    }
+
+    // Fungsi untuk menampilkan modal
+    function openModal() {
+      document.getElementById('logoutModal').style.display = 'block';
+    }
+
+    // Fungsi untuk menutup modal
+    function closeModal() {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+
+    // Fungsi logout dengan loading popup
+    function startLogout() {
+      // Tutup modal konfirmasi
+      closeModal();
+
+      // Tampilkan popup loading
+      document.getElementById('loadingPopup').style.display = 'block';
+
+      // Simulasikan proses logout (2 detik delay)
+      setTimeout(function() {
+        // Redirect ke halaman awal.html setelah proses selesai
+        window.location.href = 'awal.html';
+      }, 2000);
     }
   </script>
 </body>
