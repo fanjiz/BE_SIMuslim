@@ -31,6 +31,7 @@
 </html>
 <?php
 
+
 // Memulai sesi
 session_start();
 
@@ -59,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
                     // Jika login berhasil, simpan data sesi
                     $_SESSION['user_logged_in'] = true;
                     $_SESSION['username'] = $user['username'];
+                    $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+                    $_SESSION['email'] = $user['email'];
 
                     // Jika data berhasil dibaca, arahkan ke halaman homependakwah.html
                     header("Location: HOMEPAGE/homependakwah.html");
