@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diskusi Grup</title>
+  <link rel="stylesheet" href="opsi.css">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <a href='../DISKUSIGRUP/diskusi grup.html'>
+      <button class="back-button">
+          <img src="backikon.png" alt="Back">
+      </button>
+    </a>
+    <div class="group-info">
+      <img src="logogrup.png" alt="Group Icon" class="group-icon">
+      <span class="group-name">Sholat Yang Sempurna</span>
+    </div>
+    <button class="menu-button">...</button>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="chat-area" id="chat-area">
+    <!-- Percakapan -->
+    <div class="chat-bubble left">
+      <span class="sender">Anggota 1</span>
+      <p>Assalamualaikum, Ustadz. Saya ingin bertanya, bagaimana cara memperbaiki sholat yang tergesa-gesa?</p>
+    </div>
+    <div class="chat-bubble left">
+      <span class="sender">Anggota 2</span>
+      <p>Ustadz, apakah ada doa khusus untuk meningkatkan khusyuk dalam sholat?</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button class="ask-button" onclick="showPopup()">Jawab Pertanyaan</button>
+  </div>
+
+  <!-- Pop-up Form -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <h2>Jawaban Ustadz</h2>
+      <textarea id="answer-input" placeholder="Masukkan jawaban Anda..."></textarea>
+      <div class="popup-actions">
+        <button onclick="closePopup()" class="batal">Batal</button>
+        <button id="send-answer" class="kirim">Kirim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript untuk menjawab pertanyaan -->
+  <script>
+    // Fungsi untuk menampilkan pop-up
+    function showPopup() {
+      document.getElementById('popup').style.display = 'flex';
+    }
+
+    // Fungsi untuk menutup pop-up
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    // Fungsi untuk menambahkan jawaban ke chat
+    document.getElementById('send-answer').addEventListener('click', function() {
+      var answer = document.getElementById('answer-input').value;
+      if (answer.trim() !== '') {
+        var chatArea = document.getElementById('chat-area');
+        var newChatBubble = document.createElement('div');
+        newChatBubble.classList.add('chat-bubble', 'right');
+
+        var senderSpan = document.createElement('span');
+        senderSpan.classList.add('sender');
+        senderSpan.textContent = 'Ustadz';
+
+        var messageP = document.createElement('p');
+        messageP.textContent = answer;
+
+        newChatBubble.appendChild(senderSpan);
+        newChatBubble.appendChild(messageP);
+
+        chatArea.appendChild(newChatBubble);
+
+        // Clear the textarea and close the pop-up
+        document.getElementById('answer-input').value = '';
+        closePopup();
+      }
+    });
+  </script>
+</body>
+</html>
