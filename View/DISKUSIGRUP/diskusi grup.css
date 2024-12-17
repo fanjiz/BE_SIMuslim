@@ -3,6 +3,9 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-image: url('background.jpg');
     background-size: cover;
+    background-attachment: fixed; /* Background tetap saat scrolling */
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
@@ -13,11 +16,12 @@ header {
     display: flex;
     align-items: center;
     background-color: #39a95b;
-    padding: 20px;
+    padding: 15px 20px; /* Menambahkan sedikit padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 a.back-link {
-    text-decoration: none; /* Menghilangkan underline pada link */
+    text-decoration: none;
 }
 
 .back-btn {
@@ -33,13 +37,13 @@ a.back-link {
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
-    background-image: url(backikon.png);
+    background-size: cover;
     margin-top: 4px;
 }
 
 .back-btn:hover {
     background-color: #171616;
-    color: #131212;
+    color: #ffffff; /* Warna teks lebih kontras */
 }
 
 .header-title {
@@ -49,102 +53,118 @@ a.back-link {
     color: #121111;
 }
 
-.header-title span {
-    font-size: 20px;
-    margin-right: 15px;
-    border: none;
-    font-size: 21px;
-    color: #171616;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
 header h1 {
     font-size: 20px;
-    margin: 0;
+    margin: auto;
 }
 
 main {
-    padding: 90px;
+    width: 70%;
+    margin: auto;
+    padding: 30px 10px; /* Lebih fleksibel */
 }
 
 .icon {
-    width: 30px;
+    width: 50px;
     height: 50px;
     vertical-align: middle;
     object-fit: contain;
+    margin-right: 10px; 
 }
 
 .group-card {
     display: flex;
     justify-content: space-between;
     background-color: #88d6a9;
-    padding: 10px;
+    padding: 10px 10px;
     border-radius: 8px;
     margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.group-card:hover {
+    transform: scale(1.02); /* Efek zoom kecil */
 }
 
 .group-info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px; /* Mengurangi jarak */
 }
 
 .group-title {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
-    margin: 0;
+    margin: auto;
 }
 
 .group-members {
     font-size: 14px;
-    margin: 30;
     color: #171616;
 }
 
 .group-actions {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    margin-left: 800px;
+    align-items: left;
+    margin-left: auto   ; /* Agar fleksibel mengikuti kontainer */
 }
 
 .ustadz-name {
     font-size: 14px;
     margin-bottom: -5px;
-    text-align: left;
+    text-align: right;
 }
 
 .join-btn {
     background-color: #2fa34a;
-    color: rgb(17, 17, 17);
+    color: rgb(255, 255, 255);
     border: none;
     border-radius: 50px;
-    padding: 5px 40px;
+    padding: 5px 20px;
     cursor: pointer;
-    margin-top: 30px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Lebih rapi */
+    margin-left: 100px;
 }
 
 .join-btn:hover {
     background-color: #035615;
 }
 
-.profile-btn {
-    background-color: #b3b5b8;
-    color: rgb(13, 13, 13);
-    border: none;
+.profile-pic {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    object-fit: cover;
+    margin-top: 5px;
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.profile-pic:hover {
+    transition: transform 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .group-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .group-actions {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    main {
+        padding: 15px;
+    }
 }

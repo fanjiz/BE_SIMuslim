@@ -23,18 +23,76 @@
       background-color: #e60000;
     }
 
-    /* Modal Styling */
-    .modal, .loading-popup {
+    /* Flexbox untuk Profil */
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 300px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background-color: #f9f9f9;
+    }
+
+    /* Foto Profil */
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #ddd;
+      margin-bottom: 20px;
+    }
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Styling untuk field profil */
+    .profile-field {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .profile-field h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+    }
+    .profile-field p {
+      margin: 5px 0 0;
+      font-size: 16px;
+      color: #666;
+    }
+    .modal {
       display: none;
       position: fixed;
       z-index: 1;
-      padding-top: 100px;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal, .loading-popup {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 450px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
     }
     .modal-content {
       background-color: #fff;
@@ -195,29 +253,28 @@
       <a href="../HOMEPAGE/HOME.HTML" class="back-button">&larr;</a>
       <h1>Profil Pendakwah</h1>
     </div>
-    <div class="profile">
+    <!-- Flexbox Profil -->
+    <div class="profile-container">
       <!-- Foto Profil -->
-      <div class="profile-picture" onclick="document.getElementById('file-input').click();">
+      <div class="profile-picture">
         <img id="profile-img" src="default-profile.jpg">
       </div>
-      <!-- Input file untuk mengganti foto -->
-      <input type="file" id="file-input" accept="image/*" onchange="changeProfilePicture(event)">
-      <!-- Pesan error -->
-      <div id="error-message" class="error-message"></div>
-  
-      <!-- Form Profil -->
-      <div class="profile-info">
-        <label for="username">Username:</label>
-        <input type="text" id="username" placeholder="Masukkan username">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Masukkan email">
+      <!-- Username -->
+      <div class="profile-field">
+        <h3>Username</h3>
+        <p>Verent</p>
+      </div>
+
+      <!-- Email -->
+      <div class="profile-field">
+        <h3>Email</h3>
+        <p>verent@gmail.com</p>
       </div>
 
       <!-- Tombol Logout -->
       <button class="logout-button" onclick="openModal()">Logout</button>
     </div>
-  </div>
 
   <!-- Modal Konfirmasi Logout -->
   <div id="logoutModal" class="modal">
