@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Inisialisasi variabel pesan error
 $usernameError = $passwordError = "";
 
@@ -20,6 +20,36 @@ if (isset($_GET['error'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SiMuslim Login</title>
     <link rel="stylesheet" href="css/loginuser.css"> <!-- Path CSS -->
+    <style>
+      /* Style tambahan untuk menempatkan tombol mata di dalam kolom password */
+      .form-group {
+        position: relative; /* Menjadikan form-group relatif agar tombol mata bisa diposisikan dengan benar */
+      }
+
+      .form-group input[type="password"] {
+        padding-right: 40px; /* Memberikan ruang untuk tombol mata di sebelah kanan */
+      }
+
+      .eye-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #888;
+      }
+    </style>
+    <script>
+      // Fungsi untuk toggle password visibility
+      function togglePassword() {
+        var passwordInput = document.getElementById('password');
+        var type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+      }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -37,6 +67,8 @@ if (isset($_GET['error'])) {
                 </div>
                 <div class="form-group">
                     <input type="password" id="password" name="password" placeholder="Password" required>
+                    <!-- Tombol untuk melihat password, muncul di dalam input field -->
+                    <button type="button" onclick="togglePassword()" class="eye-button">👁️</button>
                     <?php if ($passwordError): ?>
                         <div class="error-message"><?php echo htmlspecialchars($passwordError); ?></div>
                     <?php endif; ?>

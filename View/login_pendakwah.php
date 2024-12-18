@@ -13,9 +13,12 @@
         <img src="img/logosimuslim.png" alt="Logo SiMuslim" class="logo">
       </h1>
       <p class="subtitle">Masuk ke akun Anda</p>
-      <form action="login_pendakwah.php" method="POST">
+      <form action="login_pendakwah.php" method="POST" onsubmit="return validateUsername()">
         <div class="form-group">
-          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input type="text" id="username" name="username" placeholder="Username" required maxlength="10">
+          
+          <!-- Pesan error jika username lebih dari 10 karakter -->
+          <p id="username-error" style="color: red; font-size: 14px; display: none;">Username harus maksimal 10 karakter.</p>
           
           <!-- Pesan error jika username tidak ditemukan -->
           <?php if (isset($_GET['error']) && $_GET['error'] == 'Username tidak ditemukan'): ?>
@@ -59,9 +62,26 @@
       const type = passwordInput.type === "password" ? "text" : "password";
       passwordInput.type = type;
     }
+
+    // Fungsi validasi username sebelum form dikirim
+    function validateUsername() {
+      const username = document.getElementById("username").value;
+      const usernameError = document.getElementById("username-error");
+      
+      // Cek apakah panjang username lebih dari 10 karakter
+      if (username.length > 10) {
+        usernameError.style.display = "block"; // Tampilkan pesan error
+        return false; // Mencegah form submit
+      } else {
+        usernameError.style.display = "none"; // Sembunyikan pesan error
+      }
+
+      return true; // Jika valid, form dapat disubmit
+    }
   </script>
 </body>
 </html>
+
 
 <?php
 // Memulai sesi

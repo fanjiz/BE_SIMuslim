@@ -14,10 +14,20 @@
       </h1>
       <p class="subtitle">Registrasi Pendakwah</p>
       
-      <form action="../controller/PendakwahController.php" method="POST" enctype="multipart/form-data" onsubmit="return validatePassword()">
+      <form action="../controller/PendakwahController.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         <!-- Username -->
         <div class="form-group">
-          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Username" 
+            required
+            maxlength="10" 
+          >
+          
+          <!-- Pesan error jika username lebih dari 10 karakter -->
+          <p id="username-error" style="color: red; font-size: 14px; display: none;">Username maksimal 10 karakter.</p>
           
           <!-- Pesan error jika username sudah terdaftar -->
           <?php if(isset($_GET['error']) && $_GET['error'] == 'username_exists'): ?>
@@ -111,27 +121,38 @@
       passwordInput.type = type;
     }
 
-    // Fungsi validasi password sebelum submit form
-    function validatePassword() {
+    // Fungsi validasi sebelum form disubmit
+    function validateForm() {
+      const username = document.getElementById("username").value;
+      const usernameError = document.getElementById("username-error");
+
+      // Validasi panjang username
+      if (username.length > 10) {
+        usernameError.style.display = "block";  // Tampilkan pesan error
+        return false;  // Mencegah form submit
+      } else {
+        usernameError.style.display = "none";  // Sembunyikan pesan error jika valid
+      }
+
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("konfirmasi_password").value;
 
       // Regex untuk validasi password
       const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
 
-      // Cek apakah password memenuhi syarat
+      // Validasi password
       if (!passwordPattern.test(password)) {
         alert("Password harus memiliki minimal 8 karakter, termasuk huruf besar, huruf kecil, dan simbol.");
-        return false; // Mencegah form submit
+        return false;  // Mencegah form submit
       }
 
-      // Cek apakah password dan konfirmasi password cocok
+      // Validasi konfirmasi password
       if (password !== confirmPassword) {
         alert("Password dan konfirmasi password tidak cocok!");
-        return false; // Mencegah form submit
+        return false;  // Mencegah form submit
       }
 
-      return true; // Jika semua validasi lulus, form bisa disubmit
+      return true;  // Jika semua validasi lulus, form akan disubmit
     }
   </script>
 </body>

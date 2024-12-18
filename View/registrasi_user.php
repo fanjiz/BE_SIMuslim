@@ -14,10 +14,18 @@
       </h1>
       <p class="subtitle">Registrasi Pengguna</p>
       
-      <form action="#" method="POST" enctype="multipart/form-data" onsubmit="return validatePassword()">
+      <form action="#" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         <!-- Nama Lengkap -->
         <div class="form-group">
-          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Username" 
+            required
+            maxlength="10" <!-- Menambahkan batasan jumlah karakter -->
+          
+          <p id="username-error" style="color: red; font-size: 14px; display: none;"></p>
         </div>
 
         <!-- Email -->
@@ -26,11 +34,25 @@
         </div> 
 
         <!-- Password -->
-        <div class="form-group">
-          <input type="password" id="password" name="password" placeholder="Password" required>
+        <div class="form-group password-group">
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Password" 
+            required
+          >
+          <!-- Tombol untuk melihat password -->
+          <button 
+            type="button" 
+            onclick="togglePassword('password')" 
+            class="eye-button"
+          >
+            👁️
+          </button>
         </div>
 
-        <!-- Konfirmasi Password dengan mata -->
+        <!-- Konfirmasi Password -->
         <div class="form-group password-group">
           <input 
             type="password" 
@@ -39,9 +61,10 @@
             placeholder="Konfirmasi Password" 
             required
           >
+          <!-- Tombol untuk melihat konfirmasi password -->
           <button 
             type="button" 
-            onclick="toggleConfirmPassword()" 
+            onclick="togglePassword('confirm-password')" 
             class="eye-button"
           >
             👁️
@@ -56,21 +79,30 @@
 
   <!-- JavaScript -->
   <script>
-    function toggleConfirmPassword() {
-      const confirmPasswordInput = document.getElementById("confirm-password");
-      const type = confirmPasswordInput.type === "password" ? "text" : "password";
-      confirmPasswordInput.type = type;
+    // Fungsi untuk toggle visibility password
+    function togglePassword(inputId) {
+      const passwordInput = document.getElementById(inputId);
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
     }
 
-    // Fungsi untuk memvalidasi password
-    function validatePassword() {
+    // Fungsi untuk memvalidasi form
+    function validateForm() {
+      const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
       
-      // Regex untuk validasi password
-      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+      // Validasi panjang username
+      if (username.length > 10) {
+        document.getElementById('username-error').innerText = "Username harus maksimal 10 karakter.";
+        document.getElementById('username-error').style.display = "block";
+        return false; // Mencegah form submit
+      } else {
+        document.getElementById('username-error').style.display = "none";
+      }
 
-      // Cek apakah password memenuhi syarat
+      // Validasi password
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
       if (!passwordPattern.test(password)) {
         alert("Password harus memiliki minimal 8 karakter, termasuk huruf besar, huruf kecil, dan simbol.");
         return false; // Mencegah form submit
@@ -82,11 +114,12 @@
         return false; // Mencegah form submit
       }
 
-      return true; // Jika semua validasi lulus, form bisa disubmit
+      return true; // Semua validasi lulus, form bisa disubmit
     }
   </script>
 </body>
 </html>
+
 
 <?php
 // Koneksi ke database
@@ -110,30 +143,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
   $confirm_password = $_POST['confirm-password'];
 
+  // Validasi: Periksa panjang username
+  if (strlen($username) > 10) {
+      echo "<script>
+              document.getElementById('username').insertAdjacentHTML(
+                'afterend',
+                '<p style=\"color: red; font-size: small;\">Username harus maksimal 10 karakter</p>'
+              );
+            </script>";
+      exit;
+  }
+
   // Validasi: Periksa jika password cocok
   if ($password !== $confirm_password) {
       echo "<script>alert('Password tidak cocok!');</script>";
       exit;
   }
 
-  // Cek apakah email sudah ada
-  $stmt_check = $conn->prepare("SELECT email FROM users WHERE email = ?");
-  $stmt_check->bind_param("s", $email);
-  $stmt_check->execute();
-  $stmt_check->store_result();
+  // Cek apakah username sudah ada
+  $stmt_check_username = $conn->prepare("SELECT username FROM users WHERE username = ?");
+  $stmt_check_username->bind_param("s", $username);
+  $stmt_check_username->execute();
+  $stmt_check_username->store_result();
 
-  if ($stmt_check->num_rows > 0) {
+  if ($stmt_check_username->num_rows > 0) {
+      echo "<script>
+              document.getElementById('username').insertAdjacentHTML(
+                'afterend',
+                '<p style=\"color: red; font-size: small;\">Username sudah terdaftar</p>'
+              );
+            </script>";
+      $stmt_check_username->close();
+      exit;
+  }
+
+  $stmt_check_username->close();
+
+  // Cek apakah email sudah ada
+  $stmt_check_email = $conn->prepare("SELECT email FROM users WHERE email = ?");
+  $stmt_check_email->bind_param("s", $email);
+  $stmt_check_email->execute();
+  $stmt_check_email->store_result();
+
+  if ($stmt_check_email->num_rows > 0) {
       echo "<script>
               document.getElementById('email').insertAdjacentHTML(
                 'afterend',
                 '<p style=\"color: red; font-size: small;\">Email sudah terdaftar</p>'
               );
             </script>";
-      $stmt_check->close();
+      $stmt_check_email->close();
       exit;
   }
 
-  $stmt_check->close();
+  $stmt_check_email->close();
 
   // Hash password untuk keamanan
   $hashed_password = password_hash($password, PASSWORD_BCRYPT);
