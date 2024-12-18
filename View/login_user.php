@@ -60,7 +60,7 @@ if (isset($_GET['error'])) {
             <p class="subtitle">Masuk ke akun Anda</p>
             <form action="../controller/UserController.php?action=login" method="POST">
                 <div class="form-group">
-                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required maxlength="10">
                     <?php if ($usernameError): ?>
                         <div class="error-message"><?php echo htmlspecialchars($usernameError); ?></div>
                     <?php endif; ?>
