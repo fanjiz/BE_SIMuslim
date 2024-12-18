@@ -14,10 +14,15 @@
       </h1>
       <p class="subtitle">Registrasi Pendakwah</p>
       
-      <form action="../controller/PendakwahController.php" method="POST" enctype="multipart/form-data">
+      <form action="../controller/PendakwahController.php" method="POST" enctype="multipart/form-data" onsubmit="return validatePassword()">
         <!-- Username -->
         <div class="form-group">
           <input type="text" id="username" name="username" placeholder="Username" required>
+          
+          <!-- Pesan error jika username sudah terdaftar -->
+          <?php if(isset($_GET['error']) && $_GET['error'] == 'username_exists'): ?>
+            <p style="color: red; font-size: 14px;">Username sudah terdaftar.</p>
+          <?php endif; ?>
         </div>
 
         <!-- Nama Lengkap -->
@@ -49,16 +54,8 @@
             <!-- Tombol untuk melihat password -->
             <button 
               type="button" 
-              onclick="togglePassword()" 
-              style="
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                background: none;
-                border: none;
-                cursor: pointer;
-                font-size: 14px;"
+              onclick="togglePassword('password')" 
+              style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 14px;"
             >
               👁️
             </button>
@@ -67,13 +64,24 @@
 
         <!-- Konfirmasi Password -->
         <div class="form-group">
-          <input 
-            type="password" 
-            id="konfirmasi_password" 
-            name="konfirmasi_password" 
-            placeholder="Konfirmasi Password" 
-            required
-          >
+          <div style="position: relative;">
+            <input 
+              type="password" 
+              id="konfirmasi_password" 
+              name="konfirmasi_password" 
+              placeholder="Konfirmasi Password" 
+              required
+              style="padding-right: 40px;"
+            >
+            <!-- Tombol untuk melihat konfirmasi password -->
+            <button 
+              type="button" 
+              onclick="togglePassword('konfirmasi_password')" 
+              style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 14px;"
+            >
+              👁️
+            </button>
+          </div>
         </div>
 
         <!-- Dokumen Upload -->
@@ -96,10 +104,34 @@
 
   <!-- JavaScript -->
   <script>
-    function togglePassword() {
-      const passwordInput = document.getElementById("password");
+    // Fungsi untuk melihat/mengubah tipe input password
+    function togglePassword(id) {
+      const passwordInput = document.getElementById(id);
       const type = passwordInput.type === "password" ? "text" : "password";
       passwordInput.type = type;
+    }
+
+    // Fungsi validasi password sebelum submit form
+    function validatePassword() {
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("konfirmasi_password").value;
+
+      // Regex untuk validasi password
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
+      // Cek apakah password memenuhi syarat
+      if (!passwordPattern.test(password)) {
+        alert("Password harus memiliki minimal 8 karakter, termasuk huruf besar, huruf kecil, dan simbol.");
+        return false; // Mencegah form submit
+      }
+
+      // Cek apakah password dan konfirmasi password cocok
+      if (password !== confirmPassword) {
+        alert("Password dan konfirmasi password tidak cocok!");
+        return false; // Mencegah form submit
+      }
+
+      return true; // Jika semua validasi lulus, form bisa disubmit
     }
   </script>
 </body>

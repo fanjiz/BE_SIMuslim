@@ -11,6 +11,15 @@ function isEmailRegistered($email, $conn) {
     return $result->num_rows > 0;
 }
 
+// Fungsi untuk validasi username
+function isUsernameRegistered($username, $conn) {
+    $stmt = $conn->prepare("SELECT * FROM pendakwah WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+}
+
 // Validasi file
 function isValidFile($file) {
     $allowedTypes = ['pdf', 'jpg', 'jpeg', 'png'];
@@ -34,6 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $dokumen = $_FILES['dokumen'];
+
+    // Cek apakah username sudah digunakan
+    if (isUsernameRegistered($username, $conn)) {
+        header("Location: ../view/registrasi_pendakwah.php?error=username_exists");
+        exit();
+    }
 
     // Cek apakah email sudah digunakan
     if (isEmailRegistered($email, $conn)) {

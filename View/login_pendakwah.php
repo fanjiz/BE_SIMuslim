@@ -16,22 +16,54 @@
       <form action="login_pendakwah.php" method="POST">
         <div class="form-group">
           <input type="text" id="username" name="username" placeholder="Username" required>
+          
+          <!-- Pesan error jika username tidak ditemukan -->
+          <?php if (isset($_GET['error']) && $_GET['error'] == 'Username tidak ditemukan'): ?>
+            <p style="color: red; font-size: 14px;">Username tidak ditemukan.</p>
+          <?php endif; ?>
         </div>
+
         <div class="form-group">
-          <input type="password" id="password" name="password" placeholder="Password" required>
+          <div style="position: relative;">
+            <input type="password" id="password" name="password" placeholder="Password" required style="padding-right: 40px;">
+            <!-- Tombol untuk melihat password -->
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility()" 
+              style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 14px;"
+            >
+              👁️
+            </button>
+          </div>
+          
+          <!-- Pesan error jika password salah -->
+          <?php if (isset($_GET['error']) && $_GET['error'] == 'Password salah'): ?>
+            <p style="color: red; font-size: 14px;">Password salah.</p>
+          <?php endif; ?>
         </div>
+
         <button type="submit" name="login" class="btn">Masuk</button>
       </form>
+
       <p class="register">
         Belum punya akun? <a href="registrasi_pendakwah.php">Registrasi Pendakwah</a>
       </p>
     </div>
   </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Fungsi untuk melihat/mengubah tipe input password
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById("password");
+      const type = passwordInput.type === "password" ? "text" : "password";
+      passwordInput.type = type;
+    }
+  </script>
 </body>
 </html>
+
 <?php
-
-
 // Memulai sesi
 session_start();
 

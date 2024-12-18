@@ -14,7 +14,7 @@
       </h1>
       <p class="subtitle">Registrasi Pengguna</p>
       
-      <form action="#" method="POST" enctype="multipart/form-data">
+      <form action="#" method="POST" enctype="multipart/form-data" onsubmit="return validatePassword()">
         <!-- Nama Lengkap -->
         <div class="form-group">
           <input type="text" id="username" name="username" placeholder="Username" required>
@@ -60,6 +60,29 @@
       const confirmPasswordInput = document.getElementById("confirm-password");
       const type = confirmPasswordInput.type === "password" ? "text" : "password";
       confirmPasswordInput.type = type;
+    }
+
+    // Fungsi untuk memvalidasi password
+    function validatePassword() {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      // Regex untuk validasi password
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
+      // Cek apakah password memenuhi syarat
+      if (!passwordPattern.test(password)) {
+        alert("Password harus memiliki minimal 8 karakter, termasuk huruf besar, huruf kecil, dan simbol.");
+        return false; // Mencegah form submit
+      }
+
+      // Cek apakah password dan konfirmasi password cocok
+      if (password !== confirmPassword) {
+        alert("Password dan konfirmasi password tidak cocok!");
+        return false; // Mencegah form submit
+      }
+
+      return true; // Jika semua validasi lulus, form bisa disubmit
     }
   </script>
 </body>
@@ -131,4 +154,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-
+?>
