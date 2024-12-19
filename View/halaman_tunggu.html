@@ -8,27 +8,27 @@
         body {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #eaf7e6;
             font-family: Arial, sans-serif;
+            background-color: #eaf7e6;
         }
-        .container {
-            text-align: center;
-            position: relative;
+        /* Navbar style */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            background-color: #4CAF50; /* Warna hijau untuk navbar */
+            padding: 10px 20px;
+            z-index: 1000; /* Pastikan navbar berada di atas konten lainnya */
+            display: flex;
+            align-items: center;
         }
         .back-button {
-            position: absolute;
-            top: 00000.1px;
-            left: 20px;
             display: flex;
             align-items: center;
             cursor: pointer;
             text-decoration: none;
-            color: black;
+            color: white;
             font-size: 16px;
             font-weight: bold;
         }
@@ -37,8 +37,9 @@
             height: 30px;
             margin-right: 8px;
         }
-        .logo {
-            margin-top: 60px;
+        .container {
+            text-align: center;
+            margin-top: 80px; /* Memberikan ruang untuk navbar */
         }
         .logo img {
             width: 300px;
@@ -51,11 +52,16 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Navbar dengan tombol kembali -->
+    <div class="navbar">
         <a class="back-button" href="login_pendakwah.php">
             <img src="img/backikon.png" alt="Back">
             Kembali
         </a>
+    </div>
+
+    <!-- Konten halaman -->
+    <div class="container">
         <div class="logo">
             <img src="img/logosimuslim.png" alt="SiMuslim">
         </div>
