@@ -33,7 +33,7 @@
             </div>
         </div>
         <footer>
-            Copyright © SiMuslim, 2024 - Hak Cipta Dilindungi.
+            Kontak kami di SIMuslim@gmail.com
         </footer>
     </div>
 </body>
